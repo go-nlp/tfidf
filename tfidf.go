@@ -1,4 +1,4 @@
-// tfidf is a lingo-friendly TF-IDF library
+// package tfidf is a lingo-friendly TF-IDF library
 package tfidf
 
 import (
