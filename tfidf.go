@@ -67,17 +67,13 @@ func (tf *TFIDF) Score(doc Document) []float64 {
 	ids := doc.IDs()
 
 	retVal := make([]float64, len(ids))
-	tf.Lock()
+	TF := make(map[int]float64)
 	for _, id := range ids {
-		tf.TF[id]++
+		TF[id]++
 	}
 	for i, id := range ids {
-		retVal[i] = tf.TF[id]
+		retVal[i] = TF[id]
 	}
-	for _, id := range ids {
-		tf.TF[id]--
-	}
-	tf.Unlock()
 
 	l := float64(len(ids))
 	for i, freq := range retVal {

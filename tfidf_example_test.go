@@ -89,5 +89,5 @@ func Example() {
 	// 	"never": 2.4
 	// 	"mind": 2.4
 	// 	"how": 2.4
-	// Scores: [1.2 1.3 1.2 0.9]
+	// Scores: [0.6 0.3 0.6 0.1]
 }
