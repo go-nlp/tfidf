@@ -59,7 +59,7 @@ func makeDocuments(a []string, c map[string]int) []Document {
 func Example() {
 	corpus, invCorpus := makeCorpus(mobydick)
 	docs := makeDocuments(mobydick, corpus)
-	tf := NewTFIDF()
+	tf := New()
 
 	for _, doc := range docs {
 		tf.Add(doc)

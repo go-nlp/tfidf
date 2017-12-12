@@ -16,8 +16,8 @@ type TFIDF struct {
 	// Inverse Document Frequency
 	IDF map[int]float64
 
-	// docs is the count of documents
-	docs int
+	// Docs is the count of documents
+	Docs int
 
 	sync.Mutex
 }
@@ -27,8 +27,8 @@ type Document interface {
 	IDs() []int
 }
 
-// NewTFIDF creates a new TFIDF structure
-func NewTFIDF() *TFIDF {
+// New creates a new TFIDF structure
+func New() *TFIDF {
 	return &TFIDF{
 		TF:  make(map[int]float64),
 		IDF: make(map[int]float64),
@@ -47,12 +47,12 @@ func (tf *TFIDF) Add(doc Document) {
 		tf.TF[w]++
 	}
 	tf.Unlock()
-	tf.docs++
+	tf.Docs++
 }
 
 // CalculateIDF calculates the inverse document frequency
 func (tf *TFIDF) CalculateIDF() {
-	docs := float64(tf.docs)
+	docs := float64(tf.Docs)
 	tf.Lock()
 	for t, f := range tf.TF {
 		tf.IDF[t] = math.Log(docs / f)
