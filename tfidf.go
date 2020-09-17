@@ -8,6 +8,9 @@ import (
 	"github.com/xtgo/set"
 )
 
+// ScoreFn is any function that returns a score of the document.
+type ScoreFn func(tf *TFIDF, doc Document) []float64
+
 // TFIDF is a structure holding the relevant state information about TF/IDF
 type TFIDF struct {
 	// Term Frequency
@@ -37,11 +40,7 @@ func New() *TFIDF {
 
 // Add adds a document to the state
 func (tf *TFIDF) Add(doc Document) {
-	ids := doc.IDs()
-	ints := make([]int, len(ids))
-	copy(ints, ids)
-	ints = set.Ints(ints)
-
+	ints := BOW(doc)
 	tf.Lock()
 	for _, w := range ints {
 		tf.TF[w]++
@@ -60,20 +59,37 @@ func (tf *TFIDF) CalculateIDF() {
 	tf.Unlock()
 }
 
-// Score calculates the TFIDF score (TF * IDF) for the document without adding the document to the tracked document count.
-//
-// This function is only useful for a handful of cases. It's recommended you write your own scoring functions.
-func (tf *TFIDF) Score(doc Document) []float64 {
+// TF calculates the term frequencies of term. This is useful for scoring functions.
+// It does not make it a unique bag of words.
+func TF(doc Document) []float64 {
 	ids := doc.IDs()
-
 	retVal := make([]float64, len(ids))
 	TF := make(map[int]float64)
 	for _, id := range ids {
 		TF[id]++
 	}
+
 	for i, id := range ids {
 		retVal[i] = TF[id]
 	}
+	return retVal
+}
+
+// BOW turns a document into a bag of words. The words of the document will have been deduplicated. A unique list of word IDs is then returned.
+func BOW(doc Document) []int {
+	ids := doc.IDs()
+	retVal := make([]int, len(ids))
+	copy(retVal, ids)
+	retVal = set.Ints(retVal)
+	return retVal
+}
+
+// Score calculates the TFIDF score (TF * IDF) for the document without adding the document to the tracked document count.
+//
+// This function is only useful for a handful of cases. It's recommended you write your own scoring functions.
+func (tf *TFIDF) Score(doc Document) []float64 {
+	ids := doc.IDs()
+	retVal := TF(doc)
 
 	l := float64(len(ids))
 	for i, freq := range retVal {
