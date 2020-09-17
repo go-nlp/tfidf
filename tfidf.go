@@ -22,6 +22,9 @@ type TFIDF struct {
 	// Docs is the count of documents
 	Docs int
 
+	// Len is the total length of docs
+	Len int
+
 	sync.Mutex
 }
 
@@ -45,8 +48,11 @@ func (tf *TFIDF) Add(doc Document) {
 	for _, w := range ints {
 		tf.TF[w]++
 	}
-	tf.Unlock()
+
 	tf.Docs++
+	tf.Len += len(ints) // yes we are adding only unique words
+
+	tf.Unlock()
 }
 
 // CalculateIDF calculates the inverse document frequency
