@@ -230,12 +230,12 @@ func Example() {
 
 	fmt.Printf("Relevant Docs to \"Ishmael\":\n")
 	for _, d := range ishmaelRes {
-		fmt.Printf("\tID   : %d\n\tScore: %1.3f\n\tDoc  : %q", d.id, d.score, mobydick[d.id])
+		fmt.Printf("\tID   : %d\n\tScore: %1.3f\n\tDoc  : %q\n", d.id, d.score, mobydick[d.id])
 	}
 	fmt.Println("")
 	fmt.Printf("Relevant Docs to \"whenever i find\":\n")
 	for _, d := range wheneverRes {
-		fmt.Printf("\tID   : %d\n\tScore: %1.3f\n\tDoc  : %q", d.id, d.score, mobydick[d.id])
+		fmt.Printf("\tID   : %d\n\tScore: %1.3f\n\tDoc  : %q\n", d.id, d.score, mobydick[d.id])
 	}
 	// Output:
 	// IDF:
@@ -254,10 +254,12 @@ func Example() {
 	//	ID   : 0
 	//	Score: 1.437
 	//	Doc  : "Call me Ishmael ."
+	//
 	// Relevant Docs to "whenever i find":
 	//	ID   : 5
 	//	Score: 0.985
-	//	Doc  : "whenever I find myself involuntarily pausing before coffin warehouses , and bringing up the rear of every funeral I meet ; "	ID   : 3
+	//	Doc  : "whenever I find myself involuntarily pausing before coffin warehouses , and bringing up the rear of every funeral I meet ; "
+	//	ID   : 3
 	//	Score: 0.962
 	//	Doc  : "Whenever I find myself growing grim about the mouth ; "
 
