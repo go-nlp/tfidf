@@ -14,16 +14,16 @@ type ScoreFn func(tf *TFIDF, doc Document) []float64
 // TFIDF is a structure holding the relevant state information about TF/IDF
 type TFIDF struct {
 	// Term Frequency
-	TF map[int]float64
+	TF map[int]float64 `json:"tf"`
 
 	// Inverse Document Frequency
-	IDF map[int]float64
+	IDF map[int]float64 `json:"idf"`
 
 	// Docs is the count of documents
-	Docs int
+	Docs int `json:"docs"`
 
 	// Len is the total length of docs
-	Len int
+	Len int `json:"len"`
 
 	sync.Mutex
 }
